@@ -1,0 +1,12 @@
+import{i as u,S as f}from"./assets/vendor-8c59ed88.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const s of t.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&i(s)}).observe(document,{childList:!0,subtree:!0});function o(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=o(e);fetch(e.href,t)}})();const m="44082104-13032bddabedf7f071f678933",p="https://pixabay.com/api/";async function y(n){const r=`${p}?key=${m}&q=${encodeURIComponent(n)}&image_type=photo&orientation=horizontal&safesearch=true`,o=await fetch(r);if(!o.ok)throw new Error("Network response was not ok");return await o.json()}let a;function g(n){const r=document.querySelector(".gallery");if(r.innerHTML="",n.length===0){u.error({title:"Error",message:"Sorry, there are no images matching your search query. Please try again!"});return}const o=n.map(({webformatURL:i,largeImageURL:e,tags:t,likes:s,views:c,comments:l,downloads:d})=>`
+    <a class="gallery__item" href="${e}">
+      <img src="${i}" alt="${t}" loading="lazy" />
+      <div class="info">
+        <p class="info-item"><b>Likes</b>${s}</p>
+        <p class="info-item"><b>Views</b>${c}</p>
+        <p class="info-item"><b>Comments</b>${l}</p>
+        <p class="info-item"><b>Downloads</b>${d}</p>
+      </div>
+    </a>
+  `).join("");r.insertAdjacentHTML("beforeend",o),a?a.refresh():a=new f(".gallery a",{captions:!0,captionsData:"alt",captionDelay:250,captionPosition:"bottom"})}function h(){document.querySelector(".loader").classList.remove("hidden")}function b(){document.querySelector(".loader").classList.add("hidden")}document.querySelector(".search-form").addEventListener("submit",async n=>{n.preventDefault();const r=n.target.elements.searchQuery.value.trim();if(!r){iziToast.warning({title:"Warning",message:"Please enter a search query!"});return}h();try{const o=await y(r);g(o.hits)}catch(o){iziToast.error({title:"Error",message:`Something went wrong: ${o.message}`})}finally{b()}});
+//# sourceMappingURL=commonHelpers.js.map
